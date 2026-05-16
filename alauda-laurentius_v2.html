@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alauda &amp; Laurentius</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/logo_32x32.png" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #0e0e0e;
+      --dark:   #1a1a1a;
+      --mid:    #666;
+      --light:  #f7f7f5;
+      --border: #e2e2e0;
+      --gold:   #b09060;
+      --white:  #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 56px;
+      height: 68px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.08); }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      text-decoration: none;
+    }
+
+    .nav-logo-img { height: 38px; width: auto; display: block; }
+
+    .nav-brand-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--black);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Sort%20Sol.JPG');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(0.48);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 72px 88px;
+      max-width: 800px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.0;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.58em;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .hero-tagline {
+      margin-top: 28px;
+      font-family: 'EB Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      color: rgba(255,255,255,0.8);
+      border-left: 3px solid var(--gold);
+      padding-left: 18px;
+    }
+
+    .hero-cta {
+      margin-top: 44px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 36px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.22s;
+      cursor: pointer;
+    }
+
+    .btn-light { background: var(--white); color: var(--black); }
+    .btn-light:hover { background: var(--gold); color: var(--white); }
+
+    .btn-outline-light {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.55);
+    }
+
+    .btn-outline-light:hover { background: var(--white); color: var(--black); }
+
+    .btn-dark { background: var(--black); color: var(--white); border: 2px solid var(--black); }
+    .btn-dark:hover { background: var(--gold); border-color: var(--gold); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 30px;
+      right: 56px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .scroll-hint::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 0; }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 56px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(32px, 4.5vw, 56px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--black);
+      margin-bottom: 56px;
+    }
+
+    /* ── OM OS ── */
+    #omos { background: var(--white); }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .person-block {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+    }
+
+    .person-block:first-child { border-right: 1px solid var(--border); }
+
+    .person-photo-wrap { overflow: hidden; }
+
+    .person-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: grayscale(15%);
+      transition: filter 0.4s;
+    }
+
+    .person-photo:hover { filter: grayscale(0%); }
+
+    .person-info {
+      padding: 44px 36px;
+      border-top: 3px solid var(--gold);
+    }
+
+    .person-name {
+      font-family: 'EB Garamond', serif;
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+
+    .person-role {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .person-info p {
+      font-size: 14px;
+      color: var(--mid);
+      line-height: 1.9;
+      margin-bottom: 12px;
+    }
+
+    .person-contact {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .person-contact a {
+      display: block;
+      font-size: 13px;
+      color: var(--black);
+      text-decoration: none;
+      margin-bottom: 4px;
+      transition: color 0.2s;
+    }
+
+    .person-contact a:hover { color: var(--gold); }
+
+    .li-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .li-link:hover { color: var(--gold); }
+    .li-link img { width: 18px; height: 18px; }
+
+    /* ── VISION ── */
+    #vision { background: var(--light); }
+
+    .vision-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 96px;
+    }
+
+    .vision-text p {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.95;
+      margin-bottom: 20px;
+    }
+
+    .vision-big-quote {
+      font-family: 'EB Garamond', serif;
+      font-size: 23px;
+      font-style: italic;
+      color: var(--black);
+      line-height: 1.55;
+      border-left: 3px solid var(--gold);
+      padding-left: 22px;
+      margin: 32px 0;
+    }
+
+    .principles-box {
+      background: var(--white);
+      padding: 44px;
+      border-top: 3px solid var(--black);
+    }
+
+    .principles-box h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 22px;
+      margin-bottom: 28px;
+    }
+
+    .principle-row {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .principle-row:last-child { border-bottom: none; }
+
+    .principle-arrow { color: var(--gold); font-size: 18px; line-height: 1.4; flex-shrink: 0; }
+    .principle-row p { font-size: 13px; color: #555; line-height: 1.7; }
+
+    /* ── IMAGE DIVIDER ── */
+    .img-divider {
+      width: 100%;
+      height: 440px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .img-divider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+
+    .img-divider-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 14px 56px;
+      background: rgba(0,0,0,0.52);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── RÅDGIVNING ── */
+    #raadgivning { background: var(--white); }
+
+    .services-intro { max-width: 620px; margin-bottom: 0; }
+    .services-intro p { font-size: 16px; color: var(--mid); line-height: 1.85; }
+
+    .services-group-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      border-top: 2px solid var(--black);
+      padding-top: 14px;
+      margin: 56px 0 32px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+    }
+
+    .service-card {
+      padding: 32px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .service-card:nth-child(3n) { border-right: none; }
+    .service-card:hover { background: var(--light); }
+
+    .service-card h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+
+    .service-card p { font-size: 13px; color: var(--mid); line-height: 1.8; }
+
+    /* ── PROJEKTER ── */
+    #projekter { background: var(--light); padding-bottom: 0; }
+
+    .projects-pdf-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 3px;
+      margin-bottom: 56px;
+      transition: color 0.2s;
+    }
+
+    .projects-pdf-link:hover { color: var(--gold); }
+
+    .project-list { display: flex; flex-direction: column; }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    .project-img-wrap { overflow: hidden; }
+
+    .project-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s;
+    }
+
+    .project-item:hover .project-img { transform: scale(1.04); }
+
+    .project-body { padding: 36px 48px; }
+
+    .project-meta-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .project-period {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .project-client-tag {
+      font-size: 14px;
+      color: var(--mid);
+      font-style: italic;
+      font-family: 'EB Garamond', serif;
+    }
+
+    .project-body h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .project-body p { font-size: 13px; color: var(--mid); line-height: 1.85; margin-bottom: 16px; }
+
+    .task-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .task-chip {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(176,144,96,0.3);
+      padding: 4px 11px;
+    }
+
+    /* ── PARADIGME ── */
+    #paradigme { background: var(--black); color: var(--white); }
+
+    #paradigme .section-title { color: var(--white); }
+
+    .paradigme-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+
+    .paradigme-col { border-top: 2px solid var(--gold); padding-top: 32px; }
+
+    .paradigme-col h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .paradigme-col p { font-size: 14px; color: rgba(255,255,255,0.58); line-height: 1.9; margin-bottom: 16px; }
+
+    .paradigme-quote {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+      margin: 24px 0;
+      line-height: 1.6;
+    }
+
+    .paradigme-principle {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 13px;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.65;
+    }
+
+    .paradigme-principle .arr { color: var(--gold); flex-shrink: 0; }
+
+    .tool-badges { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; align-items: center; }
+
+    .tool-badge {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tool-badge img { height: 22px; width: auto; }
+
+    .tool-badge span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── KONTAKT ── */
+    #kontakt { background: var(--white); }
+
+    .kontakt-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; }
+
+    .kontakt-person {
+      display: flex;
+      gap: 24px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .kontakt-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top;
+      flex-shrink: 0;
+      filter: grayscale(20%);
+    }
+
+    .kontakt-person-name { font-family: 'EB Garamond', serif; font-size: 20px; font-weight: 500; margin-bottom: 2px; }
+
+    .kontakt-person-role {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .kontakt-detail { font-size: 13px; color: var(--mid); margin-bottom: 3px; }
+
+    .kontakt-detail a {
+      color: var(--mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .kontakt-detail a:hover { color: var(--gold); }
+
+    .kontakt-sidebar { background: var(--light); border-top: 3px solid var(--black); padding: 44px; }
+
+    .kontakt-sidebar h3 { font-family: 'EB Garamond', serif; font-size: 24px; margin-bottom: 16px; }
+
+    .kontakt-sidebar p {
+      font-family: 'EB Garamond', serif;
+      font-size: 18px;
+      font-style: italic;
+      color: var(--mid);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    /* ── PARTNER STRIP ── */
+    .partners-strip {
+      background: var(--light);
+      border-top: 1px solid var(--border);
+      padding: 32px 56px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .partner-logo {
+      height: 28px;
+      width: auto;
+      opacity: 0.4;
+      filter: grayscale(100%);
+      transition: opacity 0.2s, filter 0.2s;
+    }
+
+    .partner-logo:hover { opacity: 0.9; filter: grayscale(0%); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 26px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    footer p { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; }
+
+    footer a {
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 28px 72px; }
+      .container { padding: 0 24px; }
+      .team-grid, .vision-layout, .paradigme-layout, .kontakt-layout { grid-template-columns: 1fr; }
+      .person-block { grid-template-columns: 1fr; }
+      .person-block:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .project-item { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .service-card:nth-child(3n) { border-right: 1px solid var(--border); }
+      .service-card:nth-child(2n) { border-right: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a class="nav-brand" href="#">
+      <img class="nav-logo-img"
+        src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/logo_180x180.png"
+        alt="A&L logo"
+        onerror="this.style.display='none'" />
+      <span class="nav-brand-text">Alauda &amp; Laurentius</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#omos">Om os</a></li>
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#raadgivning">Rådgivning</a></li>
+      <li><a href="#projekter">Projekter</a></li>
+      <li><a href="#paradigme">Paradigme</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — Sort Sol photo from GitHub -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Rådgivende ingeniører &amp; jurister</div>
+      <h1>
+        Alauda &amp; Laurentius
+        <em>Rådgivning hvor der tages ansvar</em>
+      </h1>
+      <div class="hero-tagline">Identitet er integritet</div>
+      <div class="hero-cta">
+        <a class="btn btn-light" href="#raadgivning">Vores ydelser</a>
+        <a class="btn btn-outline-light" href="#kontakt">Kontakt os</a>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll ned</div>
+  </div>
+
+  <!-- OM OS -->
+  <section id="omos">
+    <div class="container">
+      <div class="fade-in">
+        <div class="section-label">Hvem vi er</div>
+        <h2 class="section-title">Om os</h2>
+      </div>
+    </div>
+
+    <div class="team-grid">
+      <!-- Lars -->
+      <div class="person-block fade-in">
+        <div class="person-photo-wrap">
+          <img class="person-photo"
+            src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/lars.png"
+            alt="Lars Emmery-Nørholm" />
+        </div>
+        <div class="person-info">
+          <div class="person-name">Lars Emmery-Nørholm</div>
+          <div class="person-role">Bygningsingeniør · DTU 2011</div>
+          <p>Gennem de sidste 15 år har jeg opbygget en solid erfaring med projektering og projektledelse inden for store infrastrukturelle anlægsprojekter.</p>
+          <p>Jeg har in-house erfaring fra de store rådgivningsvirksomheder og kender branchens fordele og ulemper. Jeg har desuden stor erfaring med udbudsmateriale og entrepriseretten — og kan derfor være med hele vejen fra projektets start til dets aflevering.</p>
+          <p>I dag er jeg selvstændig og tilbyder rådgivning inden for især vejafvanding, tankanlæg og stål.</p>
+          <div class="person-contact">
+            <a href="mailto:lars@1aurentius.dk">lars@1aurentius.dk</a>
+            <a href="tel:+4521901844">+45 21 90 18 44</a>
+            <a class="li-link" href="https://www.linkedin.com/in/lars-n%C3%B8rholm" target="_blank">
+              <img src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/LI-In-Bug.png" alt="LinkedIn" />
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lærke -->
+      <div class="person-block fade-in">
+        <div class="person-photo-wrap">
+          <img class="person-photo"
+            src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/l%C3%A6rke.png"
+            alt="Lærke Emmery-Nørholm" />
+        </div>
+        <div class="person-info">
+          <div class="person-name">Lærke Emmery-Nørholm</div>
+          <div class="person-role">Jurist · KU 2019 · Lærer 2010</div>
+          <p>I dag arbejder jeg med juridisk rådgivning med fokus på kontraktret og entrepriseret.</p>
+          <p>Jeg har desuden erfaring med strukturel planlægning og generel juridisk kvalitetssikring under både nationale regler, EU-regler og internationale samarbejdsorganisationer.</p>
+          <p>Som mødeleder og juridisk sparringspartner sikrer jeg et solidt fundament i alle projektfaser — fra kontrakt til aflevering.</p>
+          <div class="person-contact">
+            <a href="mailto:laerke@alauda.dk">laerke@alauda.dk</a>
+            <a href="tel:+4530555176">+45 30 55 51 76</a>
+            <a class="li-link" href="https://www.linkedin.com/in/lærke-emmery" target="_blank">
+              <img src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/LI-In-Bug.png" alt="LinkedIn" />
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISION -->
+  <section id="vision">
+    <div class="container">
+      <div class="fade-in">
+        <div class="section-label">Vores tilgang</div>
+        <h2 class="section-title">Vision</h2>
+      </div>
+      <div class="vision-layout">
+        <div class="vision-text fade-in">
+          <p>Vi leverer projektstyring af høj kvalitet med fokus på AI-projektering. Den faglige integritet er vores brand, og vi er altid garant for, at I som kunde oplever dette fra start til slut i projektet.</p>
+          <div class="vision-big-quote">
+            "Her er planlægning og en høj faglig kvalitet hjørnestenene i måden, vi arbejder på."
+          </div>
+          <p>Med flere års erfaring inden for højhastighedsprojektering har vi set, hvordan projekter kompromitteres af mangelfulde og tidspressede løsninger. Dette får I ikke hos os.</p>
+          <p>Den teknologiske udvikling går hurtigt, og det er et grundvilkår at være på forkant. Vi er altid omstillingsparate og hurtige til at implementere nye værktøjer, som sikrer fortsat høj kvalitet.</p>
+        </div>
+        <div class="principles-box fade-in">
+          <h3>Vores løfte til kunden</h3>
+          <div class="principle-row">
+            <span class="principle-arrow">›</span>
+            <p>Du kan følge med i, hvem der arbejder med dine data, hvad der gøres, og hvor det sker.</p>
+          </div>
+          <div class="principle-row">
+            <span class="principle-arrow">›</span>
+            <p>Du har 100% adgang og 100% ejerskab af dine data.</p>
+          </div>
+          <div class="principle-row">
+            <span class="principle-arrow">›</span>
+            <p>Du kan anvende dine data 100% frit uden omkostninger efter aflevering.</p>
+          </div>
+          <div class="principle-row">
+            <span class="principle-arrow">›</span>
+            <p>Projekter leveres i 100% åbne dataformater.</p>
+          </div>
+          <div class="principle-row">
+            <span class="principle-arrow">›</span>
+            <p>Ingeniørdesign udføres med 100% opensource-programmer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGE DIVIDER -->
+  <div class="img-divider">
+    <img src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Betonst%C3%B8bning.JPG"
+         alt="Betonstøbning på projektet" />
+    <div class="img-divider-caption">Statoil, Hedehusene — Skum- og brandvandsprojekt, stål- og betonkonstruktioner, 2016</div>
+  </div>
+
+  <!-- RÅDGIVNING -->
+  <section id="raadgivning">
+    <div class="container">
+      <div class="services-intro fade-in">
+        <div class="section-label">Hvad vi tilbyder</div>
+        <h2 class="section-title">Rådgivningsydelser</h2>
+        <p>Alauda &amp; Laurentius tilbyder rådgivning baseret på ansvar, faglighed og integritet. Vi arbejder med et klart fokus på kvalitet og tillid i samarbejdet med vores klienter.</p>
+      </div>
+
+      <div class="services-group-label fade-in">Ingeniørfaglige ydelser</div>
+      <div class="services-grid">
+        <div class="service-card fade-in">
+          <h3>Vejafvanding</h3>
+          <p>Hydrauliske beregninger og design efter vejreglerne. 3D-modellering i DANDAS for store infrastrukturprojekter.</p>
+        </div>
+        <div class="service-card fade-in">
+          <h3>Tankanlæg &amp; stål</h3>
+          <p>Konceptdesign, projektering og tilstandsrapporter for tanke og rørsystemer inkl. udbud, specifikationer og indkøb.</p>
+        </div>
+        <div class="service-card fade-in">
+          <h3>Projektledelse</h3>
+          <p>Byggemøder, økonomi- og kontraktstyring, DALUX-projektadministration samt intern og ekstern koordinering.</p>
+        </div>
+        <div class="service-card fade-in">
+          <h3>Tilsyn &amp; bygherre</h3>
+          <p>Bygherre-repræsentation, daglig rundering og fagtilsyn på beton, stål, jord og kloakarbejder.</p>
+        </div>
+        <div class="service-card fade-in">
+          <h3>AI-projektering</h3>
+          <p>Projektering med kunstig intelligens som grundlag. Håndberegningskontrol på kritiske emner er altid inkluderet.</p>
+        </div>
+        <div class="service-card fade-in">
+          <h3>BIM &amp; 3D-modellering</h3>
+          <p>3D/2D-tegninger for afløb, bro og tunnel. BIM/CAD (VDC) samt GPS- og laser-opmåling.</p>
+        </div>
+      </div>
+
+      <div class="services-group-label fade-in">Juridiske ydelser</div>
+      <div class="services-grid">
+        <div class="service-card fade-in">
+          <h3>Kontraktret &amp; entrepriseret</h3>
+          <p>Grundig juridisk udarbejdelse af kontrakter med detaljeringsgrad der afspejler tegnings- og tilbudslistene.</p>
+        </div>
+        <div class="service-card fade-in">
+          <h3>Strukturel planlægning</h3>
+          <p>Juridisk kvalitetssikring under nationale regler, EU-regler og internationale samarbejdsorganisationer.</p>
+        </div>
+        <div class="service-card fade-in">
+          <h3>Mødeledelse</h3>
+          <p>Professionel mødeledelse med klare beslutninger, dokumenterede aftaler og struktureret fremdrift.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJEKTER -->
+  <section id="projekter">
+    <div class="container">
+      <div class="fade-in">
+        <div class="section-label">Erfaring</div>
+        <h2 class="section-title">Projekter</h2>
+        <a class="projects-pdf-link" href="https://1aurentius-hjem.github.io/1aurentius/Projekter.pdf" target="_blank">
+          ↓ Download fuld projektliste (PDF)
+        </a>
+      </div>
+    </div>
+
+    <div class="project-list">
+
+      <div class="project-item fade-in">
+        <div class="project-img-wrap">
+          <img class="project-img"
+            src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/PS_Sundkrogsgade_X1.jpg"
+            alt="Sundkrogsgade" />
+        </div>
+        <div class="project-body">
+          <div class="project-meta-row">
+            <span class="project-period">jan. 2025 – sep. 2025</span>
+            <span class="project-client-tag">Udviklingsselskabet By &amp; Havn</span>
+          </div>
+          <h3>Byggemodning af Sundkrogsgade (2. etape)</h3>
+          <p>Bygherre-repræsentation og projektstyring med fuldt ansvar for bygge-, teknik- og økonomimøder, udledningstilladelser, trafikomlægninger, DALUX-administration og koordinering med HOFOR og Københavns Kommune.</p>
+          <div class="task-chips">
+            <span class="task-chip">Bygherre</span>
+            <span class="task-chip">Kontraktstyring</span>
+            <span class="task-chip">DALUX</span>
+            <span class="task-chip">Tilsyn</span>
+            <span class="task-chip">Arealdisponering</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item fade-in">
+        <div class="project-img-wrap">
+          <img class="project-img"
+            src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Roerkanalen.jpg"
+            alt="Røerkanal Vest" />
+        </div>
+        <div class="project-body">
+          <div class="project-meta-row">
+            <span class="project-period">jan. 2025 – aug. 2025</span>
+            <span class="project-client-tag">Udviklingsselskabet By &amp; Havn</span>
+          </div>
+          <h3>Røerkanal Vest — spuns og jordarbejder</h3>
+          <p>Bygherre-rådgivning med udledningstilladelser, aftaler om arealinddragelse og dispositionsret, DALUX-projektadministration og koordinering med HOFOR.</p>
+          <div class="task-chips">
+            <span class="task-chip">Bygherre</span>
+            <span class="task-chip">Arealinddragelse</span>
+            <span class="task-chip">Udledning</span>
+            <span class="task-chip">HOFOR</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item fade-in">
+        <div class="project-img-wrap">
+          <img class="project-img"
+            src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Oiu0t.jpg"
+            alt="Letbanen L3" />
+        </div>
+        <div class="project-body">
+          <div class="project-meta-row">
+            <span class="project-period">feb. 2021 – feb. 2024</span>
+            <span class="project-client-tag">Ramboll</span>
+          </div>
+          <h3>Letbanen L3 (CG Jensen) — Projektering</h3>
+          <p>Projektering af afløb fra Rødovre til Lyngby, hydrauliske beregninger og design efter vejreglerne samt 3D-modellering i DANDAS.</p>
+          <div class="task-chips">
+            <span class="task-chip">Vejafvanding</span>
+            <span class="task-chip">Hydraulik</span>
+            <span class="task-chip">DANDAS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item fade-in">
+        <div class="project-img-wrap">
+          <img class="project-img"
+            src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/ffaacbab-fa8a-460e-8a79-81539f7491ea.png"
+            alt="Letbanen L3 Tyréns" />
+        </div>
+        <div class="project-body">
+          <div class="project-meta-row">
+            <span class="project-period">jan. 2019 – feb. 2022</span>
+            <span class="project-client-tag">Tyréns Danmark</span>
+          </div>
+          <h3>Letbanen L3 (CG Jensen) — Projektering</h3>
+          <p>Projektering af afløb, 3D-modellering af bro og tunnel, 3D/2D-tegninger samt BIM/CAD (VDC) og besigtigelser fra Rødovre til Lyngby.</p>
+          <div class="task-chips">
+            <span class="task-chip">BIM/VDC</span>
+            <span class="task-chip">Bro &amp; tunnel</span>
+            <span class="task-chip">3D/2D</span>
+            <span class="task-chip">Besigtigelser</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item fade-in">
+        <div class="project-img-wrap">
+          <img class="project-img"
+            src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Platform%20Amagerv%C3%A6rket%20overblik.JPG"
+            alt="HOFOR Amagerværket" />
+        </div>
+        <div class="project-body">
+          <div class="project-meta-row">
+            <span class="project-period">2015 – 2018</span>
+            <span class="project-client-tag">COWI</span>
+          </div>
+          <h3>HOFOR — Damprør &amp; TPW varmevekslerstation, Amagerværket</h3>
+          <p>Projekterende statiker for stål- og betonkonstruktioner. 3D-modellering af bygning og rørgallerier, tegnestueleder for stålkonstruktioner, fagtilsyn og myndighedsbehandling.</p>
+          <div class="task-chips">
+            <span class="task-chip">Statik</span>
+            <span class="task-chip">Stål &amp; beton</span>
+            <span class="task-chip">3D-modellering</span>
+            <span class="task-chip">Tilsyn</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item fade-in">
+        <div class="project-img-wrap">
+          <img class="project-img"
+            src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Betonst%C3%B8bning.JPG"
+            alt="Statoil Hedehusene" />
+        </div>
+        <div class="project-body">
+          <div class="project-meta-row">
+            <span class="project-period">2016</span>
+            <span class="project-client-tag">COWI</span>
+          </div>
+          <h3>Statoil — Skum- og brandvandsprojekt, Hedehusene</h3>
+          <p>Projekterende statiker for stål- og betonkonstruktioner. VDC med fuld interface, 3D/2D-tegner, opmåling, tilsyn og indkøb af pumper og udstyr.</p>
+          <div class="task-chips">
+            <span class="task-chip">Statik</span>
+            <span class="task-chip">VDC</span>
+            <span class="task-chip">Opmåling</span>
+            <span class="task-chip">Indkøb</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item fade-in">
+        <div class="project-img-wrap">
+          <img class="project-img"
+            src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Tank%20p%C3%A5%20vogn.JPG"
+            alt="FBE-POL Tankanlæg" />
+        </div>
+        <div class="project-body">
+          <div class="project-meta-row">
+            <span class="project-period">2012 – 2013</span>
+            <span class="project-client-tag">COWI</span>
+          </div>
+          <h3>FBE-POL — Konceptdesign, projektkoordinator og indkøber</h3>
+          <p>Konceptdesign for oplagring og distribution af petroleum. Indkøb af tankanlæg inkl. distributionsrørsystem og import/eksport-system. IKT-ansvarlig, datablad-ansvarlig og udbud.</p>
+          <div class="task-chips">
+            <span class="task-chip">Tankanlæg</span>
+            <span class="task-chip">Konceptdesign</span>
+            <span class="task-chip">IKT</span>
+            <span class="task-chip">Udbud</span>
+            <span class="task-chip">Indkøb</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- IMAGE DIVIDER 2 -->
+  <div class="img-divider">
+    <img src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Lille%20gangbro.JPG"
+         alt="Gangbro" />
+    <div class="img-divider-caption">HOFOR — Damprør fra Amagerværket til Fredensplads skakt, 2015–2017</div>
+  </div>
+
+  <!-- PARADIGME -->
+  <section id="paradigme">
+    <div class="container">
+      <div class="fade-in">
+        <div class="section-label" style="color:rgba(176,144,96,0.75)">Vores metode</div>
+        <h2 class="section-title">Teknisk &amp; juridisk paradigme</h2>
+      </div>
+      <div class="paradigme-layout">
+
+        <div class="paradigme-col fade-in">
+          <h3>Teknisk paradigme</h3>
+          <div class="paradigme-quote">"Alauda &amp; Laurentius projekterer kun med kunstig intelligens. Det er en nødvendighed for at klare fremtidens udfordringer og konkurrence. Kontrolberegninger udføres altid som håndberegning på kritiske emner."</div>
+          <p>Projekter leveres i 100% åbne dataformater. Ingeniørdesign udføres med 100% opensource-programmer.</p>
+          <div class="paradigme-principle">
+            <span class="arr">›</span>
+            <span>Claude Sonnet 4.6 og Mistral Le Chat som AI-design (pr. 2026)</span>
+          </div>
+          <div class="paradigme-principle">
+            <span class="arr">›</span>
+            <span>Dalux som byggestyringssoftware — 100% danskejet og anbefalet</span>
+          </div>
+          <div class="paradigme-principle">
+            <span class="arr">›</span>
+            <span>Autodesk, Bentley og Trimble kun ved hotseat-arbejde</span>
+          </div>
+          <div class="tool-badges">
+            <div class="tool-badge">
+              <img src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/ClaudeIcon-Rounded.png" alt="Claude" />
+              <span>Claude</span>
+            </div>
+            <div class="tool-badge">
+              <img src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/m-boxed-rainbow.png" alt="Mistral" />
+              <span>Mistral</span>
+            </div>
+            <div class="tool-badge">
+              <img src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Dalux%20kun%20hus%20klip.png" alt="Dalux" />
+              <span>Dalux</span>
+            </div>
+            <div class="tool-badge">
+              <img src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/FreeCAD-symbol.png" alt="FreeCAD" />
+              <span>FreeCAD</span>
+            </div>
+            <div class="tool-badge">
+              <img src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/qgis-icon128.png" alt="QGIS" />
+              <span>QGIS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="paradigme-col fade-in">
+          <h3>Juridisk paradigme</h3>
+          <div class="paradigme-quote">"Alauda &amp; Laurentius er garant for grundighed i din kontrakt. Her arbejder vi kun med et godt juridisk håndværk der integrerer den essentielle planlægning."</div>
+          <p>En grundighed som sikrer mod misforståelser af hvem, hvor, hvornår og hvad der er en del af entreprisekontrakten.</p>
+          <div class="paradigme-principle">
+            <span class="arr">›</span>
+            <span>Kontrakten skrives til det individuelle byggeri</span>
+          </div>
+          <div class="paradigme-principle">
+            <span class="arr">›</span>
+            <span>Detaljeringsgrad der afspejler tegnings- og tilbudslistene</span>
+          </div>
+          <div class="paradigme-principle">
+            <span class="arr">›</span>
+            <span>Nationale regler, EU-regler og internationale organisationer</span>
+          </div>
+          <div class="paradigme-principle">
+            <span class="arr">›</span>
+            <span>Juridisk kvalitetssikring gennem hele projektforløbet</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section id="kontakt">
+    <div class="container">
+      <div class="fade-in">
+        <div class="section-label">Kom i kontakt</div>
+        <h2 class="section-title">Kontakt</h2>
+      </div>
+      <div class="kontakt-layout">
+        <div class="fade-in">
+          <div class="kontakt-person">
+            <img class="kontakt-avatar"
+              src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/lars.png"
+              alt="Lars Emmery-Nørholm" />
+            <div>
+              <div class="kontakt-person-name">Lars Emmery-Nørholm</div>
+              <div class="kontakt-person-role">Bygningsingeniør</div>
+              <div class="kontakt-detail"><a href="mailto:lars@1aurentius.dk">lars@1aurentius.dk</a></div>
+              <div class="kontakt-detail"><a href="tel:+4521901844">+45 21 90 18 44</a></div>
+            </div>
+          </div>
+          <div class="kontakt-person">
+            <img class="kontakt-avatar"
+              src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/l%C3%A6rke.png"
+              alt="Lærke Emmery-Nørholm" />
+            <div>
+              <div class="kontakt-person-name">Lærke Emmery-Nørholm</div>
+              <div class="kontakt-person-role">Jurist</div>
+              <div class="kontakt-detail"><a href="mailto:laerke@alauda.dk">laerke@alauda.dk</a></div>
+              <div class="kontakt-detail"><a href="tel:+4530555176">+45 30 55 51 76</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="kontakt-sidebar fade-in">
+          <h3>Vi kommer gerne til jer</h3>
+          <p>"Identitet er integritet — og det gælder også måden vi møder vores klienter på."</p>
+          <a class="btn btn-dark" href="mailto:lars@1aurentius.dk">Skriv til os</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNER LOGOS -->
+  <div class="partners-strip">
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/ClaudeIcon-Rounded.png" alt="Claude" title="Claude AI" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/m-boxed-rainbow.png" alt="Mistral" title="Mistral" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Dalux%20kun%20hus%20klip.png" alt="Dalux" title="Dalux" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/FreeCAD-symbol.png" alt="FreeCAD" title="FreeCAD" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/qgis-icon128.png" alt="QGIS" title="QGIS" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/james-1.png" alt="James" title="James" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/httpd.png" alt="Apache" title="Apache httpd" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/A%26L-symbol.png" alt="A&L" title="Alauda & Laurentius" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Valknut.png" alt="Valknut" title="Valknut" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Jagt.png" alt="Jagt" title="Jagt" />
+    <img class="partner-logo" src="https://raw.githubusercontent.com/1aurentius-hjem/1aurentius/main/Heckert_GNU_white.png" alt="GNU" title="GNU" style="background:#444;padding:2px;" />
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Alauda &amp; Laurentius ApS — Lærke &amp; Lars</p>
+    <p>Web design af Lars Emmery-Nørholm &nbsp;·&nbsp; <a href="https://www.whois.com/whois/1aurentius.dk" target="_blank">WHOIS</a></p>
+  </footer>
+
+  <script>
+    // Scroll shadow on nav
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Fade in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), 60);
+        }
+      });
+    }, { threshold: 0.07 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
